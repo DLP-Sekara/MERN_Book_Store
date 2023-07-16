@@ -8,3 +8,11 @@ export interface BookModel{
     book_price:number;
     book_image:Buffer;
 }
+
+export interface OrderModel{
+    _id:string;
+    oid:number;
+    customer_name:string;
+    itemList:object;
+    orderDate:Date
+}

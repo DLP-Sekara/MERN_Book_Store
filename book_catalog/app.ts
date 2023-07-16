@@ -16,7 +16,7 @@ app.use(cors());
 //routes
 app.use('/book',bookRoute);
 app.use('/user',userRoute);
-app.use('/book',orderRoute);
+app.use('/order',orderRoute);
 
 //mongoDb connection 
 const url='mongodb://localhost/all_books';
