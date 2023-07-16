@@ -1,0 +1,48 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response } from 'express';
+import { deleteBookService, getAllBookService, saveBookService, searchBookService, updateBookService } from '../services/bookService';
+
+export const getAllBook=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const book=await getAllBookService();
+    res.send(book);
+  }catch(error){
+    res.status(400);
+  }
+};
+
+export const saveBook=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const book=await saveBookService(req.body);
+    res.send(book);
+  }catch(error){
+    res.status(400);
+  }
+};
+
+export const updateBook=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const book=await updateBookService(req.body);
+    res.send(book);
+  }catch(error){
+    res.status(400);
+  }
+};
+
+export const searchBook=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const book=await searchBookService(req.params.book_name);
+    res.send(book);
+  }catch(error){
+    res.status(400);
+  }
+};
+
+export const deleteBook=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const book=await deleteBookService(req.params.id);
+    res.send(book);
+  }catch(error){
+    res.status(400);
+  }
+};
