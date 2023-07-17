@@ -5,7 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import bookRoute from './src/routes/bookRoute';
 import orderRoute from './src/routes/orderRoute';
-import userRoute from './src/routes/userRoute';
+import customerRoute from './src/routes/customerRoute';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -15,7 +15,7 @@ app.use(cors());
 
 //routes
 app.use('/book',bookRoute);
-app.use('/user',userRoute);
+app.use('/customer',customerRoute);
 app.use('/order',orderRoute);
 
 //mongoDb connection 

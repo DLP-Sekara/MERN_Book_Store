@@ -1,5 +1,7 @@
+import { Types } from 'mongoose';
+
 export interface BookModel{
-    _id:string;
+    _id:Types.ObjectId;
     bid:number;
     book_name:string;
     book_author:string;
@@ -10,9 +12,16 @@ export interface BookModel{
 }
 
 export interface OrderModel{
-    _id:string;
+    _id:Types.ObjectId;
     oid:number;
     customer_name:string;
     itemList:object;
     orderDate:Date
+}
+
+export interface CustomerModel{
+    _id:Types.ObjectId;
+    cid:number;
+    name:string;
+    password:string;
 }
