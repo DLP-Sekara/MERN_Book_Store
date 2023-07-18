@@ -15,7 +15,11 @@ const SignInPage = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigate = useNavigate();
-
+  React.useEffect(() => {
+    // if (user === true) {
+    //   navigate('/home');
+    // }
+  });
 
   //functions
   function checkInputValidation(dataItem: LoginDetails) {
