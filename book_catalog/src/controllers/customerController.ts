@@ -6,7 +6,7 @@ import { config }from '../utils/config';
 
 export const saveCustomer=async(req:Request,res:Response):Promise<any>=>{
   try{
-    console.log('chec controller');
+    console.log('check controller');
     const customer=await saveCustomerService(req.body);
     if(customer!=null){
       const dataStoredInToken ={

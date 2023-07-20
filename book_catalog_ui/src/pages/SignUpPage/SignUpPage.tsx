@@ -6,21 +6,27 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import './SignUpPageStyle.css';
 import { LoginDetails } from '../../utils/interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUserAction } from '../SignInPage/slices/SignInSlice';
+
 const SignUpPage = () => {
   //state and instance
   const [emailError, setEmailError] = React.useState('');
   const [nameError, setNameError] = React.useState('');
   const [passwordError, setpasswordError] = React.useState('');
+  const user = useSelector((state: any) => state.signIn.user);
 
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const userRoll = 'User';
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
-    // if (user === true) {
-    //   navigate('/home');
-    // }
+    if (user === true) {
+      navigate('/dashboard');
+    }
   });
 
 
@@ -32,7 +38,7 @@ const SignUpPage = () => {
   function SignUpFunction() {
     const loginPerson = { email, name, password, userRoll };
     if (checkInputValidation(loginPerson)) {
-      //dispatch(registerUserAction(loginPerson));
+      dispatch(registerUserAction(loginPerson));
     }
   }  
   function checkInputValidation(dataItem: LoginDetails) {
