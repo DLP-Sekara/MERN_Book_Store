@@ -4,16 +4,25 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from '../utils/config';
 
+//save customer
 export const saveCustomerService=async(data:CustomerModel):Promise<CustomerModel>=>{
   try{
-    console.log(data);
     const dataObj=new Customer();
-    dataObj._id=data._id;
-    dataObj.cid=data.cid;
-    dataObj.name=data.name;
+    
+    //auto increment cid
+    const highestCid = await Customer.findOne().sort('-cid').select('cid').lean();
+    const newCid = highestCid ? highestCid.cid + 1 : 1;
+
+    //bcrypt password
     const tempPassword = data.password;
     const hash = await bcrypt.hash(tempPassword, 10);
-    console.log(hash);
+
+    //set Data
+    dataObj._id=data._id;
+    dataObj.cid=newCid;
+    dataObj.email=data.email;
+    dataObj.name=data.name;
+    dataObj.userRoll=data.userRoll;
     dataObj.password=hash;
 
     const saveResponse=await dataObj.save();
@@ -22,10 +31,11 @@ export const saveCustomerService=async(data:CustomerModel):Promise<CustomerModel
     return null;
   }
 };
+
+//login customer
 export const getCustomer = async (data: CustomerModel):Promise<CustomerModel> => {
   try {
-    console.log(data);
-    const findCustomer = await Customer.findOne({ name: data.name });
+    const findCustomer = await Customer.findOne({ email: data.email });
     if (findCustomer) {
       const isValid = await bcrypt.compare(data.password, findCustomer.password);
       if (isValid) {
@@ -40,6 +50,8 @@ export const getCustomer = async (data: CustomerModel):Promise<CustomerModel> =>
     return null;
   }
 }; 
+
+//get new access token
 export const refreshService = async (refreshToken: string) => {
   try {
     const verifyRefToken = jwt.verify(refreshToken, config.jwt_secretRe_key);
@@ -48,10 +60,39 @@ export const refreshService = async (refreshToken: string) => {
     } else {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
-      const tempName = verifyRefToken.name;
-      const findCustomer = await Customer.findOne({ name: tempName });
+      const tempEmail = verifyRefToken.email;
+      const findCustomer = await Customer.findOne({ email: tempEmail });
       if (findCustomer) {
         return findCustomer;
+      }
+    }
+  } catch (err) {
+    console.log('Get New Access Token Eroor ', err);
+    return { err: 'Cannot Get New Access Token' };
+  }
+};
+
+//get userDetails
+export const getUserDetails = async (userAccToken: string) => {
+  try {
+    const verifyAccToken = jwt.verify(userAccToken, config.jwt_secret_key);
+    if (!verifyAccToken) {
+      console.log('Unauthorized');
+    } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      const userEmail = verifyAccToken.email;
+      const findCustomer = await Customer.findOne({ email: userEmail });
+      // const secret = config.jwt_secret_key;
+      if (findCustomer !== null) {
+        const userData = {
+          email: findCustomer.email,
+          name: findCustomer.name,
+          userRoll: findCustomer.userRoll,
+        };
+        return {
+          userData,
+        };
       }
     }
   } catch (err) {

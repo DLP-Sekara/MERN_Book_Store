@@ -22,6 +22,8 @@ export interface OrderModel{
 export interface CustomerModel{
     _id:Types.ObjectId;
     cid:number;
+    email:string
     name:string;
     password:string;
+    userRoll:string;
 }
