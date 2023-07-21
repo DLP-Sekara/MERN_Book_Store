@@ -6,6 +6,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { LoginDetails } from '../../utils/interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUserAction } from './slices/SignInSlice';
 
 const SignInPage = () => {
 
@@ -14,11 +16,14 @@ const SignInPage = () => {
   const [passwordError, setpasswordError] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const user = useSelector((state: any) => state.signIn.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    // if (user === true) {
-    //   navigate('/home');
-    // }
+    if (user === true) {
+      navigate('/dashboard');
+      console.log('complete');
+    }
   });
 
   //functions
@@ -48,7 +53,7 @@ const SignInPage = () => {
   function logInFunction() {
     const loginPerson = { email, password };
     if (checkInputValidation(loginPerson)) {
-      //dispatch(loginUserAction(loginPerson));
+      dispatch(loginUserAction(loginPerson));
     }
   }
   const openSignInPage = () => {
@@ -123,7 +128,7 @@ const SignInPage = () => {
                 <Button
                   className="btn signInBtn"
                   variant="contained"
-                  onClick={logInFunction}
+                  onClick={()=>logInFunction()}
                 >
                   Log in
                 </Button>
@@ -145,3 +150,5 @@ const SignInPage = () => {
 };
 
 export default SignInPage;
+
+

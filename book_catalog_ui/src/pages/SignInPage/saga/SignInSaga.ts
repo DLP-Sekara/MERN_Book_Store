@@ -1,36 +1,39 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { AnyAction } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 import { LoginDetails } from '../../../utils/interface';
-import { loginUserAction, logOutUserAction, registerUserAction, refreshFunction, saveUserAction } from '../slices/SignInSlice';
-import { insertCustomerService } from '../../../services/CustomerServices';
+import { loginUserAction, logOutUserAction, registerUserAction, refreshFunction, saveUserAction, setUserDetails } from '../slices/SignInSlice';
+import { getUserDetails, getUserService, insertCustomerService } from '../../../services/CustomerServices';
 //services and slices
 
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
 function* loginUser(action: AnyAction): any {
-//   try {
-//     const response: boolean = yield call(getUserService, action.payload);
-//     if (response) {
-//       const userData: LoginDetails = yield call(getUserDetails);
-//       console.log(userData);
+  try {
+    const response: boolean = yield call(getUserService, action.payload);
+    
+    if (response) {
+      const userData: LoginDetails = yield call(getUserDetails);
   
-//       const userDataCookie = cookies.get('userData');
-//       yield put(saveUserAction(true));
-//       yield put(
-//         setUserDetails({
-//           userRoll: userDataCookie.userRoll,
-//           name: userDataCookie.name,
-//         })
-//       );
-//     } else {
-//       alert('can not find user,check email & password..!');
-//     }
-//   } catch (error) {
-//     alert('can not find user,check email & password..!');
-//     console.log(error);
-//   }
+      const userDataCookie = cookies.get('userData');
+      console.log(userDataCookie);
+      yield put(saveUserAction(true));
+      yield put(
+        setUserDetails({
+          userRoll: userDataCookie.userRoll,
+          name: userDataCookie.name,
+        })
+      );
+    } else {
+      alert('can not find user,check email & password..!');
+    }
+  } catch (error) {
+    alert('can not find user,check email & password..!');
+    console.log(error);
+  }
 }
   
 function* logOutUser(): any {
@@ -47,19 +50,22 @@ function* logOutUser(): any {
   
 function* registerUser(action: AnyAction): any {
   try {
-    const response: boolean = yield call(
+    const response = yield call(
       insertCustomerService,
       action.payload
     );
-    if (response) {
+    console.log(response);
+    if (response.data===true) {
+      const userData: LoginDetails = yield call(getUserDetails);
+      console.log(userData);
       const userDataCookie = cookies.get('userData');
       yield put(saveUserAction(true));
-      //   yield put(
-      //     setUserDetails({
-      //       userRoll: userDataCookie.userRoll,
-      //       name: userDataCookie.name,
-      //     })
-      //   );
+      yield put(
+        setUserDetails({
+          userRoll: userDataCookie.userRoll,
+          name: userDataCookie.name,
+        })
+      );
       // yield put(signUpSuccess(true));
       alert('User Added Successfully!');
     } else {
@@ -67,6 +73,7 @@ function* registerUser(action: AnyAction): any {
     }
   } catch (error) {
     console.log(error);
+    alert('Error occurred while registering user');
   }
 }
 

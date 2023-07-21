@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   user: '',
+  userDetail: [],
 };
 
 export const userSlice = createSlice({
@@ -16,6 +17,9 @@ export const userSlice = createSlice({
     saveUserAction: (state, action) => {
       state.user = action.payload;
     },
+    setUserDetails: (state, action) => {
+      state.userDetail = action.payload;
+    },
     refreshFunction:()=>{},
   },
 });
@@ -26,6 +30,7 @@ export const {
   loginUserAction,
   logOutUserAction,
   saveUserAction,
+  setUserDetails,
   refreshFunction } = userSlice.actions;
 export const selectUser = (state:any) => state.userReducer.user;
 export default userSlice.reducer;
