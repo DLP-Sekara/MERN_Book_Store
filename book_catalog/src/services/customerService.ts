@@ -4,9 +4,25 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from '../utils/config';
 
+
+//get customer
+export const getAllCustomerService=async():Promise<object | string>=>{
+  try{
+    const book=await Customer.find();
+    return book;
+  }catch(error){
+    return ('error :'+error);
+  }
+};
+
 //save customer
 export const saveCustomerService=async(data:CustomerModel):Promise<CustomerModel>=>{
   try{
+    const findCustomer:boolean = await Customer.findOne({ email: data.email }).lean();
+    if(findCustomer){
+      return null;
+    }
+
     const dataObj=new Customer();
     
     //auto increment cid
@@ -27,8 +43,9 @@ export const saveCustomerService=async(data:CustomerModel):Promise<CustomerModel
 
     const saveResponse=await dataObj.save();
     return saveResponse;
+    
   }catch(error){
-    return null;
+    return error;
   }
 };
 
@@ -82,6 +99,7 @@ export const getUserDetails = async (userAccToken: string) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const userEmail = verifyAccToken.email;
+      console.log(userEmail);
       const findCustomer = await Customer.findOne({ email: userEmail });
       // const secret = config.jwt_secret_key;
       if (findCustomer !== null) {
@@ -93,10 +111,22 @@ export const getUserDetails = async (userAccToken: string) => {
         return {
           userData,
         };
+      }else{
+        throw new Error('Customer not found');
       }
     }
   } catch (err) {
     console.log('Get New Access Token Eroor ', err);
-    return { err: 'Cannot Get New Access Token' };
+    throw new Error('Cannot Get New Access Token');
+  }
+};
+
+//delete customer
+export const deleteCustomerService=async(data:string):Promise<object | string>=>{
+  try{
+    const deleteResponse=await Customer.findByIdAndDelete(data);
+    return {message:'Customer Deleted successfuly !',deleteResponse};
+  }catch(error) {
+    return ('error :'+error);
   }
 };

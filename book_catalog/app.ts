@@ -6,12 +6,17 @@ import dotenv from 'dotenv';
 import bookRoute from './src/routes/bookRoute';
 import orderRoute from './src/routes/orderRoute';
 import customerRoute from './src/routes/customerRoute';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 const port = process.env.PORT;
 
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  credentials: true, 
+  origin: 'http://localhost:3000' }));
+app.use(express.urlencoded({ extended: true }));
 
 //routes
 app.use('/book',bookRoute);

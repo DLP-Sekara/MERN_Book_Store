@@ -1,17 +1,26 @@
-import { getCustomer, getUserDetails, refreshService, saveCustomerService } from '../services/customerService';
+import { deleteCustomerService, getAllCustomerService, getCustomer, getUserDetails, refreshService, saveCustomerService } from '../services/customerService';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { config }from '../utils/config';
+import { config } from '../utils/config';
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+export const getAllCustomer=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const customer=await getAllCustomerService();
+    res.send(customer);
+  }catch(error){
+    res.status(400);
+  }
+};
 
 export const saveCustomer=async(req:Request,res:Response):Promise<any>=>{
   try{
     const customer=await saveCustomerService(req.body);
-    if(customer!=null){
+    console.log(customer);
+    if(customer!==null){
       const dataStoredInToken ={
         email:customer.email,
         userRoll:customer.userRoll,
-
       };
       const newAccessToken = jwt.sign(
         dataStoredInToken,
@@ -20,7 +29,6 @@ export const saveCustomer=async(req:Request,res:Response):Promise<any>=>{
           expiresIn: 60 * 60,
         }
       );
-
       const newRefreshToken = jwt.sign(
         dataStoredInToken,
         config.jwt_secretRe_key,
@@ -36,10 +44,13 @@ export const saveCustomer=async(req:Request,res:Response):Promise<any>=>{
         maxAge: 60 * 60 * 24 * 1000,
         httpOnly: true,
       });
+      res.status(200).json(true);
+    }else{
+      res.status(200).json(false);
     }
-    customer !== null ? res.json(true) : res.json(false);
   }catch(error){
-    res.status(400);
+    console.log('Error in saveCustomer:', error);
+    res.status(500).json({ error: 'Failed to save customer' });
   }
 };
 
@@ -106,23 +117,22 @@ export const refresh = async (req: Request, res: Response) => {
 };
 
 export const userDetail = async (req: Request, res: Response) => {
-  
   try {
     const userAccToken = req.cookies.accessToken;
     const response = await getUserDetails(userAccToken);
+    
     if (response) {
       res.cookie('userData', response.userData, {
         maxAge: 60 * 60 * 24 * 1000,
       });
-      //res.send(response);
-      res.sendStatus(200);
-      //res.send(true);
+      res.status(200).json(response);
     } else {
-      res.status(550);
+      res.sendStatus(404);
     }
     // res.send(false);
   } catch (err) {
-    res.status(400);
+    console.error('Error in userDetail:', err);
+    res.sendStatus(500);
   }
 };
 
@@ -146,5 +156,14 @@ export const logout = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.send('Error' + err);
+  }
+};
+
+export const deleteCustomer=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const customer=await deleteCustomerService(req.params.id);
+    res.send(customer);
+  }catch(error){
+    res.status(400);
   }
 };
