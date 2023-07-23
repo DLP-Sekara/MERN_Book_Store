@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import './Dashboard.css';
+import './AllProducts.css';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: 'red',
   // ...theme.typography.body2,
@@ -14,7 +14,7 @@ const Item = styled(Paper)(({ theme }) => ({
   // color: theme.palette.text.secondary,
 }));
 
-const Dashboard = () => {
+const AllProducts = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={0}>
@@ -26,17 +26,14 @@ const Dashboard = () => {
 
         {/* body */}
         <Grid container item xs={12}>
-          <Grid item xs={12}>
+
+          <Grid item xs={2}>
+            <div className='sidebar'>side bar</div>
+          </Grid>
+
+          <Grid item xs={10}>
             <div className='content'>
               content
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
               <li>list $</li>
               <li>list $</li>
               <li>list $</li>
@@ -65,4 +62,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AllProducts;

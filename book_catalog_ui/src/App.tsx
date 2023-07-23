@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SignInPage from './pages/SignInPage/SignInPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import PrivateRoutes from './utils/PrivateRoutes';
+import AllProducts from './pages/AllProducts/AllProducts';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route element={<PrivateRoutes/>}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
+          <Route path="/allproducts" element={<AllProducts />} />
           <Route path="/details" element={<DetailsPage />} />
         </Routes>
       </BrowserRouter>

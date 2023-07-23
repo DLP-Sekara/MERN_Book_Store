@@ -7,6 +7,8 @@ const cookies = new Cookies();
 import { LoginDetails } from '../../../utils/interface';
 import { loginUserAction, logOutUserAction, registerUserAction, refreshFunction, saveUserAction, setUserDetails } from '../slices/SignInSlice';
 import { getUserDetails, getUserService, insertCustomerService } from '../../../services/CustomerServices';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //services and slices
 
 
@@ -28,10 +30,16 @@ function* loginUser(action: AnyAction): any {
         })
       );
     } else {
-      alert('can not find user,check email & password..!');
+      //alert('can not find user,check email & password..!');
+      toast.error('can not find user,check email & password..!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   } catch (error) {
-    alert('can not find user,check email & password..!');
+    //alert('can not find user,check email & password..!');
+    toast.error('can not find user,check email & password..!', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
     console.log(error);
   }
 }
@@ -66,14 +74,23 @@ function* registerUser(action: AnyAction): any {
           name: userDataCookie.name,
         })
       );
-      // yield put(signUpSuccess(true));
-      alert('User Added Successfully!');
+     
+      //alert('User Added Successfully!');
+      toast.success('User Added Successfully!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } else {
-      alert('User Already Exists!');
+      //alert('User Already Exists!');
+      toast.warn('User Already Exists!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   } catch (error) {
     console.log(error);
-    alert('Error occurred while registering user');
+    //alert('Error occurred while registering user');
+    toast.error('Error occurred while registering user', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   }
 }
 
