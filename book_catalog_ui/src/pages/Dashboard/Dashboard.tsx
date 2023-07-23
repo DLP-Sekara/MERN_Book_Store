@@ -34,20 +34,7 @@ const Dashboard = () => {
               <li>list $</li>
               <li>list $</li>
               <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
+              
               
             </div>
           </Grid>

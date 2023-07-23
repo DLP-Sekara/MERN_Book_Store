@@ -1,18 +1,11 @@
 import * as React from 'react';
 import ResponsiveAppBar from '../../components/AppBar/AppBar';
-import { Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import './AllProducts.css';
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: 'red',
-  // ...theme.typography.body2,
-  // padding: theme.spacing(1),
-  // textAlign: 'center',
-  // color: theme.palette.text.secondary,
-}));
+import BookCard from '../../components/BookCard/BookCard';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 
 const AllProducts = () => {
   return (
@@ -32,20 +25,20 @@ const AllProducts = () => {
           </Grid>
 
           <Grid item xs={10}>
+            <div className='btnArea1'>
+              <Button variant="outlined" startIcon={<AddIcon />}>
+               Add Book
+              </Button>
+            </div>
             <div className='content'>
-              content
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              
+              <BookCard/>
+              <BookCard/>
+              <BookCard/>
+              <BookCard/>
+              <BookCard/>
+              <BookCard/>
+              <BookCard/>
+              <BookCard/>
             </div>
           </Grid>
 
