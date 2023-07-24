@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LoginDetails {
     userRoll?: string;
     email: string;
@@ -5,3 +6,13 @@ export interface LoginDetails {
     password?: string;
     
   }
+export interface BookModel{
+  book_id?:string;
+  booK_bid?:number;
+    bookName:string;
+    bookAuthor:string;
+    bookQty:number | string;
+    bookPrice:number | string;
+    bookType:string;
+    bookImage?:null;
+}

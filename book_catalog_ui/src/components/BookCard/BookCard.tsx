@@ -11,37 +11,73 @@ import IconButton from '@mui/material/IconButton';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { MDBMask, MDBView, MDBContainer, MDBRow, MDBCol } from 'mdbreact';
-export default function BookCard() {
+import { deleteBookService } from '../../services/BookServices';
+import { toast } from 'react-toastify';
+import ConfirmDialog from '../DeleteDialog/ConfirmDialog';
+import UpdateBookModal from '../UpdateBookModal/UpdateBookModal';
+
+
+export default function BookCard(props:any) {
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openUpdate, setOpenUpdate] = React.useState(false);
+
+  const handleDialogClickOpen = () => {
+    setOpenDialog(true);
+  };
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+
+  const handleUpdateClickOpen = () => {
+    setOpenUpdate(true);
+  };
+  const handleUpdateClose = () => {
+    setOpenUpdate(false);
+  };
+
+  
+  
+ 
   return (
-    <Card sx={{ maxWidth: 250 }}>
-    
+    <><Card sx={{ maxWidth: 250 }}>
+
       <CardMedia
-        sx={{ height: 250,cursor:'pointer' }}
+        sx={{ height: 250, cursor: 'pointer' }}
         image={bookImage}
-        title="book img"
-      />
+        title="book img" />
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
-          Book One
+          {props.data.book_name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          kasun perera
+          {props.data.book_author}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Rs.500.0
+          Rs.{props.data.book_price}
         </Typography>
       </CardContent>
       <Tooltip title="Update" placement="top">
-        <IconButton aria-label="add to favorites">
-          <EditCalendarIcon sx={{ color: '#1e90ff' }}/>
+        <IconButton aria-label="add to favorites" onClick={handleUpdateClickOpen}>
+          <EditCalendarIcon sx={{ color: '#1e90ff' }} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete" placement="top">
-        <IconButton aria-label="share">
-          <DeleteIcon sx={{ color: '#ff4757' }}/>
+        <IconButton aria-label="share" onClick={handleDialogClickOpen} >
+          <DeleteIcon sx={{ color: '#ff4757' }} />
         </IconButton>
       </Tooltip>
+      <UpdateBookModal open={openUpdate} handleClose={handleUpdateClose} data={props.data}/>
+      <ConfirmDialog open={openDialog} handleClose={handleDialogClose} id={props.data._id}/>;
     </Card>
+    
+    </>
   );
 }

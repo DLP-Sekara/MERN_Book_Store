@@ -25,7 +25,7 @@ const bookSchema=new mongoose.Schema({
     required:true
   },
   book_image:{
-    type:Buffer,
+    type:String,
     required:true
   }
 }

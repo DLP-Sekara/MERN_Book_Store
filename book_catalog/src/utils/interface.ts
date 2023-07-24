@@ -3,12 +3,12 @@ import { Types } from 'mongoose';
 export interface BookModel{
     _id:Types.ObjectId;
     bid:number;
-    book_name:string;
-    book_author:string;
-    book_type:string;
-    book_qty:number;
-    book_price:number;
-    book_image:Buffer;
+    bookName:string;
+    bookAuthor:string;
+    bookQty:number;
+    bookPrice:number;
+    bookType:string;
+    bookImage?:string;
 }
 
 export interface OrderModel{
