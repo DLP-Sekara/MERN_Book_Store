@@ -21,10 +21,11 @@ import { deleteBookService } from '../../services/BookServices';
 import { toast } from 'react-toastify';
 import ConfirmDialog from '../DeleteDialog/ConfirmDialog';
 import UpdateBookModal from '../UpdateBookModal/UpdateBookModal';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function BookCard(props:any) {
-
+  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
 
@@ -50,9 +51,11 @@ export default function BookCard(props:any) {
     <><Card sx={{ maxWidth: 250 }}>
 
       <CardMedia
+        onClick={()=>{navigate('/payment');localStorage.setItem('selectedBook', props.data.bid);}}
         sx={{ height: 250, cursor: 'pointer' }}
         image={bookImage}
-        title="book img" />
+        title="book img"
+      />
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
           {props.data.book_name}

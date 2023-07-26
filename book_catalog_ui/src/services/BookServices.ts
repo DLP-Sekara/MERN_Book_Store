@@ -7,6 +7,11 @@ export const getAllBooksService = async () => {
   const res = await axios.get(baseUrl);
   return res;
 };
+
+export const fetchBookService = async (bid: string ) => {
+  const res = await axios.get(`${baseUrl}/details/${bid}`);
+  return res;
+};
 export const insertBookService = async (book: BookModel) => {
   const res = await axios.post(baseUrl, book);
   return res;

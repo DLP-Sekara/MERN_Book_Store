@@ -32,5 +32,5 @@ export const {
   saveUserAction,
   setUserDetails,
   refreshFunction } = userSlice.actions;
-export const selectUser = (state:any) => state.userReducer.user;
+export const selectUser = (state:any) => state.userReducer.userDetail;
 export default userSlice.reducer;

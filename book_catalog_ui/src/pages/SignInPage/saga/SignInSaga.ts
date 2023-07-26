@@ -29,6 +29,11 @@ function* loginUser(action: AnyAction): any {
           name: userDataCookie.name,
         })
       );
+      const userDetails = {
+        userRoll: userDataCookie.userRoll,
+        name: userDataCookie.name,
+      };
+      localStorage.setItem('userDetails', JSON.stringify(userDetails));
     } else {
       //alert('can not find user,check email & password..!');
       toast.error('can not find user,check email & password..!', {
@@ -74,7 +79,11 @@ function* registerUser(action: AnyAction): any {
           name: userDataCookie.name,
         })
       );
-     
+      const userDetails = {
+        userRoll: userDataCookie.userRoll,
+        name: userDataCookie.name,
+      };
+      localStorage.setItem('userDetails', JSON.stringify(userDetails));
       //alert('User Added Successfully!');
       toast.success('User Added Successfully!', {
         position: toast.POSITION.TOP_RIGHT,

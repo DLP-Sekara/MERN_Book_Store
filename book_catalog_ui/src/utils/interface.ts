@@ -16,3 +16,11 @@ export interface BookModel{
     bookType:string;
     bookImage?:null;
 }
+export interface OrderModel{
+    oid?:number;
+    customer_name:string;
+    itemList:object;
+    totalAmount:number;
+    shippingAddress:string;
+    orderDate:Date
+}

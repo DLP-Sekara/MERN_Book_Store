@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard';
-import DetailsPage from './pages/DetailsPage/DetailsPage';
+import PaymentPage from './pages/PaymentPage/PaymentPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SignInPage from './pages/SignInPage/SignInPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
@@ -15,11 +15,9 @@ function App() {
         <Routes>
           <Route path="/" element={<SignInPage />} />
           <Route path="/register" element={<SignUpPage />} />
-          <Route element={<PrivateRoutes/>}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/allproducts" element={<AllProducts />} />
-          <Route path="/details" element={<DetailsPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
         </Routes>
       </BrowserRouter>
     </div>

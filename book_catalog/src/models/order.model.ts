@@ -23,6 +23,14 @@ const orderSchema=new mongoose.Schema({
     required:true
   },
   itemList: [itemSchema],
+  totalAmount:{
+    type:Number,
+    required:true
+  },
+  shippingAddress:{
+    type:String,
+    required:true
+  },
   orderDate: {
     type: Date,
     required:true,

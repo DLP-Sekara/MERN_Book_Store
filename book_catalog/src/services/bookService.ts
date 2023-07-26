@@ -67,6 +67,14 @@ export const searchBookService=async(data:string):Promise<object | string>=>{
     return ('error :'+error);
   }
 };
+export const fetchBookService=async(data:string):Promise<object | string>=>{
+  try{
+    const fetchedBook = await Book.find({bid:data});
+    return fetchedBook;
+  }catch(error) {
+    return ('error :'+error);
+  }
+};
 
 export const deleteBookService=async(data:string):Promise<object | string>=>{
   try{

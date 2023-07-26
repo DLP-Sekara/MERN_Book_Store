@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
-import { deleteBookService, getAllBookService, saveBookService, searchBookService, updateBookService } from '../services/bookService';
+import { deleteBookService, fetchBookService, getAllBookService, saveBookService, searchBookService, updateBookService } from '../services/bookService';
 
 export const getAllBook=async(req:Request,res:Response):Promise<any>=>{
   try{
@@ -38,6 +38,15 @@ export const searchBook=async(req:Request,res:Response):Promise<any>=>{
   }
 };
 
+export const fetchBook=async(req:Request,res:Response):Promise<any>=>{
+  try{
+    const book=await fetchBookService(req.params.bid);
+    console.log(book);
+    res.send(book);
+  }catch(error){
+    res.status(400);
+  }
+};
 export const deleteBook=async(req:Request,res:Response):Promise<any>=>{
   try{
     const book=await deleteBookService(req.params.id);
