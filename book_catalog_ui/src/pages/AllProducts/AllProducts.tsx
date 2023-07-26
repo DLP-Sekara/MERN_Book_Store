@@ -19,6 +19,17 @@ const AllProducts = () => {
   const updates=useSelector((state:any)=>state.booksState.updates);
   const dispatch = useDispatch();
 
+  const user=localStorage.getItem('userDetails');
+  const [userPermision, setUserPermision] = useState(false);
+  React.useEffect(()=>{
+    if (user) {
+      const userDetails = JSON.parse(user);
+      const status=userDetails.userRoll;
+      status==='Admin'?setUserPermision(true):setUserPermision(false);
+    }
+  },[]);
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () =>{ 
     setOpen(false);
@@ -58,7 +69,7 @@ const AllProducts = () => {
           </Grid>
 
           <Grid item xs={10}>
-            <div className='btnArea1'>
+            <div className='btnArea1' style={{display:userPermision?'':'none'}}>
               <Button onClick={handleOpen}variant="outlined" startIcon={<AddIcon />}>
                Add Book
               </Button>
@@ -69,10 +80,6 @@ const AllProducts = () => {
                 books.map((book:any)=>(
                   <BookCard
                     key={book.bid}
-                    // id={book._id}
-                    // bookName={book.book_name}
-                    // authorName={book.book_author}
-                    // bookPrice={book.book_price}
                     data={book}
                   />
                 ))

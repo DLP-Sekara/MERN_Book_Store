@@ -137,6 +137,7 @@ export const userDetail = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
+  console.log('logout calling');
   console.log(req.body);
   try {
     res.cookie('accessToken', '', {

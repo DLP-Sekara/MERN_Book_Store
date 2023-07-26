@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 import { LoginDetails } from '../../../utils/interface';
 import { loginUserAction, logOutUserAction, registerUserAction, refreshFunction, saveUserAction, setUserDetails } from '../slices/SignInSlice';
-import { getUserDetails, getUserService, insertCustomerService } from '../../../services/CustomerServices';
+import { getUserDetails, getUserService, insertCustomerService, logoutUserService } from '../../../services/CustomerServices';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //services and slices
@@ -50,15 +50,16 @@ function* loginUser(action: AnyAction): any {
 }
   
 function* logOutUser(): any {
-//   try {
-//     const response: any = yield call(logoutUserService);
-//     if (response) {
-//       //yield put(saveUserAction(false));
-//       //yield put(setUserDetails([]));
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
+  try {
+    console.log('done 22');
+    const response: any = yield call(logoutUserService);
+    if (response) {
+      yield put(saveUserAction(false));
+      yield put(setUserDetails([]));
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
   
 function* registerUser(action: AnyAction): any {

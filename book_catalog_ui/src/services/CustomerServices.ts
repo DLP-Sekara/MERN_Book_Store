@@ -24,3 +24,10 @@ export const getUserDetails = async () => {
   });
   return res;
 };
+
+export const logoutUserService = async () => {
+  const res = await axios.get(baseUrl +'/logout', {
+    withCredentials: true,
+  });
+  return res;
+};

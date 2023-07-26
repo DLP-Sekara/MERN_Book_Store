@@ -44,7 +44,15 @@ export default function BookCard(props:any) {
     setOpenUpdate(false);
   };
 
-  
+  const user=localStorage.getItem('userDetails');
+  const [userPermision, setUserPermision] = React.useState(false);
+  React.useEffect(()=>{
+    if (user) {
+      const userDetails = JSON.parse(user);
+      const status=userDetails.userRoll;
+      status==='Admin'?setUserPermision(true):setUserPermision(false);
+    }
+  },[]);
   
  
   return (
@@ -67,12 +75,12 @@ export default function BookCard(props:any) {
           Rs.{props.data.book_price}
         </Typography>
       </CardContent>
-      <Tooltip title="Update" placement="top">
+      <Tooltip title="Update" placement="top" style={{display:userPermision?'':'none'}}>
         <IconButton aria-label="add to favorites" onClick={handleUpdateClickOpen}>
           <EditCalendarIcon sx={{ color: '#1e90ff' }} />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Delete" placement="top">
+      <Tooltip title="Delete" placement="top" style={{display:userPermision?'':'none'}}>
         <IconButton aria-label="share" onClick={handleDialogClickOpen} >
           <DeleteIcon sx={{ color: '#ff4757' }} />
         </IconButton>

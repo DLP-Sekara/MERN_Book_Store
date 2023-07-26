@@ -17,6 +17,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom';
+import { logOutUserAction } from '../../pages/SignInPage/slices/SignInSlice';
+import { useDispatch } from 'react-redux';
 
 
 //meta for search
@@ -71,7 +73,7 @@ const settings = ['Profile',  'Logout'];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const dispatch = useDispatch();
   const handleOpenNavMenu = (event:any) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -92,8 +94,12 @@ function ResponsiveAppBar() {
     };
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (functionName:string) => {
     setAnchorElUser(null);
+    if(functionName==='Logout'){
+      dispatch(logOutUserAction());
+      console.log('done');
+    }
   };
 
   return (
@@ -224,7 +230,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={()=>{handleCloseUserMenu(setting);}}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
