@@ -4,12 +4,11 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from '../utils/config';
 
-
 //get customer
 export const getAllCustomerService=async():Promise<object | string>=>{
   try{
-    const book=await Customer.find();
-    return book;
+    const customer=await Customer.find();
+    return customer;
   }catch(error){
     return ('error :'+error);
   }
@@ -32,7 +31,6 @@ export const saveCustomerService=async(data:CustomerModel):Promise<CustomerModel
     //bcrypt password
     const tempPassword = data.password;
     const hash = await bcrypt.hash(tempPassword, 10);
-
     //set Data
     dataObj._id=data._id;
     dataObj.cid=newCid;

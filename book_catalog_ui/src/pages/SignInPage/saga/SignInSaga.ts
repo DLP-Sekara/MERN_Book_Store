@@ -22,6 +22,7 @@ function* loginUser(action: AnyAction): any {
   
       const userDataCookie = cookies.get('userData');
       console.log(userDataCookie);
+      
       yield put(saveUserAction(true));
       yield put(
         setUserDetails({
@@ -85,49 +86,26 @@ function* registerUser(action: AnyAction): any {
         name: userDataCookie.name,
       };
       localStorage.setItem('userDetails', JSON.stringify(userDetails));
-      //alert('User Added Successfully!');
       toast.success('User Added Successfully!', {
         position: toast.POSITION.TOP_RIGHT,
       });
     } else {
-      //alert('User Already Exists!');
       toast.warn('User Already Exists!', {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
   } catch (error) {
     console.log(error);
-    //alert('Error occurred while registering user');
     toast.error('Error occurred while registering user', {
       position: toast.POSITION.TOP_RIGHT,
     });
   }
 }
 
-
-/*
-  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
-  Allows concurrent fetches of user.
-*/
 function* signInSaga() {
   yield takeEvery(loginUserAction, loginUser);
   yield takeEvery(logOutUserAction, logOutUser);
   yield takeEvery(registerUserAction, registerUser);
 }
-
-/*
-  Alternatively you may use takeLatest.
-
-  Does not allow concurrent fetches of user. If "USER_FETCH_REQUESTED" gets
-  dispatched while a fetch is already pending, that pending fetch is cancelled
-  and only the latest one will be run.
-*/
-
-// function* signInSaga() {
-//   yield takeLatest(loginUserAction, loginUser);
-//   yield takeLatest(logOutUserAction, logOutUser);
-//   yield takeLatest(registerUserAction, registerUser);
-//   yield takeLatest(refreshFunction, refreshAction);
-// }
 
 export default signInSaga;

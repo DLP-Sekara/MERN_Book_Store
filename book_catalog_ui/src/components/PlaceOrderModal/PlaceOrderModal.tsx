@@ -31,12 +31,14 @@ const style = {
 export default function PlaceOrderModal({ open, handleClose,data,qty }:any) {
   const navigate = useNavigate();
   const user=localStorage.getItem('userDetails');
+  
   const [userName,setUserName]=React.useState<any>();
   React.useEffect(()=>{
     if (user) {
       const userDetails = JSON.parse(user);
       setUserName(userDetails.name);
     }
+    
   },[]);
 
 

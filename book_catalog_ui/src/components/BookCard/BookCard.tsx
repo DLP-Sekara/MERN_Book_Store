@@ -86,7 +86,7 @@ export default function BookCard(props:any) {
         </IconButton>
       </Tooltip>
       <UpdateBookModal open={openUpdate} handleClose={handleUpdateClose} data={props.data}/>
-      <ConfirmDialog open={openDialog} handleClose={handleDialogClose} id={props.data._id}/>;
+      <ConfirmDialog open={openDialog} handleClose={handleDialogClose} id={props.data._id}/>
     </Card>
     
     </>

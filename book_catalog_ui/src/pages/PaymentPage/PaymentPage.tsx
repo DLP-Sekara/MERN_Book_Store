@@ -17,12 +17,32 @@ import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tooltip from '@mui/material/Tooltip';
 import PlaceOrderModal from '../../components/PlaceOrderModal/PlaceOrderModal';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const PaymentPage = () => {
   const [open, setOpen] = React.useState(false);
   const data=localStorage.getItem('selectedBook');
   const[book,setBook]=React.useState<any>([]);
   const [quantity, setQuantity] = React.useState(1);
+
+  const navigate = useNavigate();
+  const user = useSelector((state: any) => state.signIn.user);
+  const userDetails = useSelector((state: any) => state.signIn.userDetail);
+  React.useEffect(() => {
+    if (user === false) {
+      navigate('/');
+    }
+    console.log('details_ ',userDetails);
+  },[]);
+
+  const user2 = useSelector((state: any) => state.signIn.user);
+  React.useEffect(() => {
+    if (user2 === false) {
+      navigate('/');
+    }
+  });
+
   React.useEffect(()=>{
     getBookDetails(data);
   },[]);

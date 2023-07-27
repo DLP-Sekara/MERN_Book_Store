@@ -22,7 +22,6 @@ const SignInPage = () => {
   React.useEffect(() => {
     if (user === true) {
       navigate('/dashboard');
-      console.log('complete');
     }
   });
 

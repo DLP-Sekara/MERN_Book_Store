@@ -1,5 +1,6 @@
 import Order from '../models/order.model';
 import { OrderModel } from '../utils/interface';
+
 export const getAllOrderService=async():Promise<object | string>=>{
   try{
     const order=await Order.find();
@@ -15,11 +16,13 @@ export const saveOrderService=async(data:OrderModel):Promise<object | string>=>{
     //auto increment oid
     const highestOid= await Order.findOne().sort('-oid').select('oid').lean();
     const newOid = highestOid ? highestOid.oid + 1 : 1;
+
     const temp=data.itemList.map((item) => ({
       book_name: item.book_name,
       quantity: item.quantity,
       price: item.price,
     }));
+    
     const dataObj = new Order({
       oid: newOid,
       customer_name: data.customer_name,

@@ -6,16 +6,18 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import './Dashboard.css';
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: 'red',
-  // ...theme.typography.body2,
-  // padding: theme.spacing(1),
-  // textAlign: 'center',
-  // color: theme.palette.text.secondary,
-}));
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import dashboard from '../../assets/images/dashboard.jpg';
 
 const Dashboard = () => {
- 
+  const navigate = useNavigate();
+  const user = useSelector((state: any) => state.signIn.user);
+  React.useEffect(() => {
+    if (user === false) {
+      navigate('/');
+    }
+  });
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={0}>
@@ -28,16 +30,8 @@ const Dashboard = () => {
         {/* body */}
         <Grid container item xs={12}>
           <Grid item xs={12}>
-            <div className='content'>
-              content
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              <li>list $</li>
-              
-              
-            </div>
+            <img src={dashboard} style={{width:'100%',height:'100%'}} alt="" />
+            
           </Grid>
 
         </Grid>

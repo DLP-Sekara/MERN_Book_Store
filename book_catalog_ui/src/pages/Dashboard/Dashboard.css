@@ -4,7 +4,7 @@
     background-color: blue;
 }
 .content{
-    min-height: auto;
+    min-height: 10vh;
      background-color: green;
 }
 .footer{

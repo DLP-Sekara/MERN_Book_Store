@@ -47,6 +47,7 @@ export const fetchBook=async(req:Request,res:Response):Promise<any>=>{
     res.status(400);
   }
 };
+
 export const deleteBook=async(req:Request,res:Response):Promise<any>=>{
   try{
     const book=await deleteBookService(req.params.id);

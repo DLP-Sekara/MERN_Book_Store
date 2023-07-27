@@ -3,11 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { config } from '../utils/config';
 
-export const permissions = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const permissions = async (req: Request,res: Response,next: NextFunction) => {
   console.log('request has come...!');
   try {
     const token = req.cookies.accessToken;

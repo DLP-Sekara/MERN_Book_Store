@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const app = express();
 import cors from 'cors';
 import dotenv from 'dotenv';
+
 import bookRoute from './src/routes/bookRoute';
 import orderRoute from './src/routes/orderRoute';
 import customerRoute from './src/routes/customerRoute';
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use(cors({
   credentials: true, 
   origin: 'http://localhost:3000' }));
+  
 app.use(express.urlencoded({ extended: true }));
 
 //routes

@@ -16,19 +16,20 @@ export const getAllCustomer=async(req:Request,res:Response):Promise<any>=>{
 export const saveCustomer=async(req:Request,res:Response):Promise<any>=>{
   try{
     const customer=await saveCustomerService(req.body);
-    console.log(customer);
+
     if(customer!==null){
+
       const dataStoredInToken ={
         email:customer.email,
         userRoll:customer.userRoll,
       };
-      const newAccessToken = jwt.sign(
-        dataStoredInToken,
-        config.jwt_secret_key,
+
+      const newAccessToken = jwt.sign(dataStoredInToken,config.jwt_secret_key,
         {
           expiresIn: 60 * 60,
         }
       );
+
       const newRefreshToken = jwt.sign(
         dataStoredInToken,
         config.jwt_secretRe_key,
@@ -36,14 +37,17 @@ export const saveCustomer=async(req:Request,res:Response):Promise<any>=>{
           expiresIn: 60 * 60 * 24 * 1000,
         }
       );
+
       res.cookie('accessToken', newAccessToken, {
         maxAge: 60 * 60,
         httpOnly: true,
       });
+      
       res.cookie('refreshToken', newRefreshToken, {
         maxAge: 60 * 60 * 24 * 1000,
         httpOnly: true,
       });
+
       res.status(200).json(true);
     }else{
       res.status(200).json(false);

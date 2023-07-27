@@ -13,6 +13,7 @@ export const getAllBookService=async():Promise<object | string>=>{
 export const saveBookService=async(data:BookModel):Promise<object | string>=>{
   try{
     const dataObj=new Book();
+    
     //auto increment cid
     const highestBid = await Book.findOne().sort('-bid').select('bid').lean();
     const newBid = highestBid ? highestBid.bid + 1 : 1;
@@ -25,7 +26,6 @@ export const saveBookService=async(data:BookModel):Promise<object | string>=>{
     dataObj.book_type=data.bookType;
     dataObj.book_image='img one';
 
-    console.log(dataObj);
     const saveResponse=await dataObj.save();
     return {message:'Book added successfully !',saveResponse};
   }catch(error){
@@ -67,6 +67,7 @@ export const searchBookService=async(data:string):Promise<object | string>=>{
     return ('error :'+error);
   }
 };
+
 export const fetchBookService=async(data:string):Promise<object | string>=>{
   try{
     const fetchedBook = await Book.find({bid:data});

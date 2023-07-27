@@ -12,15 +12,24 @@ import AddBookModal from '../../components/AddBookModal/AddBookModal';
 import { getAllBooksService } from '../../services/BookServices';
 import { useDispatch ,useSelector} from 'react-redux';
 import { saveBooksAction, setUpdates } from './AllProductsSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 const AllProducts = () => {
   const [open, setOpen] = useState(false);
   const books=useSelector((state:any)=>state.booksState.books);
   const updates=useSelector((state:any)=>state.booksState.updates);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const user=localStorage.getItem('userDetails');
   const [userPermision, setUserPermision] = useState(false);
+  const user2 = useSelector((state: any) => state.signIn.user);
+  React.useEffect(() => {
+    if (user2 === false) {
+      navigate('/');
+    }
+  });
+
   React.useEffect(()=>{
     if (user) {
       const userDetails = JSON.parse(user);
