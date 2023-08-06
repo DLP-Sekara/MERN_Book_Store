@@ -36,35 +36,37 @@ export default function AddBookModal({ open, handleClose }:any) {
   const [bookQty, setBookQty] = React.useState('');
   const [bookPrice, setBookPrice] = React.useState('');
   const [bookType, setBookType] = React.useState('');
-  //const [bookImage, setBookImage] = React.useState<Buffer | null>();
-  //const [bookImage, setBookImage] = React.useState({ preview: '', data: '' });
-  //const [previewUrl, setPreviewUrl] = React.useState<string | null>();
-
-  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>('');
+  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImagePreview, setSelectedImagePreview] = useState('');
 
   const handleFileSelect = (event:any) => {
-    const reader=new FileReader();
-    const file = event.target.files[0];
-    reader.readAsDataURL(file);
-    reader.onload=()=>{
-      setSelectedImage(reader.result);
-    };
-    reader.onerror=error=>{
-      console.log('Error :',error);
-    };
-
+    //setSelectedImage(URL.createObjectURL(event.target.files[0]));
+    setSelectedImage(event.target.files[0]);
+    setSelectedImagePreview(URL.createObjectURL(event.target.files[0]));
   };
+
   const handleImageClose = () => {
     setSelectedImage('');
+    setSelectedImagePreview('');
   };
-  async function saveBookFunction() {
-    
-    const bookSample:BookModel = { bookName , bookAuthor , bookQty , bookPrice , bookType };
+
+  async function saveBookFunction(event: any) {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('book_name', bookName);
+    formData.append('book_author', bookAuthor);
+    formData.append('book_qty', bookQty);
+    formData.append('book_price', bookPrice);
+    formData.append('book_type', bookType);
+    formData.append('book_image', selectedImage);
+
+    const bookSample = { bookName , bookAuthor , bookQty , bookPrice , bookType ,selectedImage};
+
 
     if (checkInputValidation(bookSample)) {
-      //dispatch(registerUserAction(loginPerson));
-      const response = await insertBookService(bookSample);
-      if(response!=null){
+      const response = await insertBookService(formData);
+      console.log(response);
+      if(response.data!=null){
         clearFields();
         toast.success('Book Added Successfully!', {
           position: toast.POSITION.TOP_RIGHT,
@@ -79,9 +81,9 @@ export default function AddBookModal({ open, handleClose }:any) {
     setBookQty('');
     setBookPrice('');
     setBookType('');
-    setSelectedImage(null);
-    handleClose();
-    
+    setSelectedImage('');
+    setSelectedImagePreview('');
+    handleClose();  
   }
   function checkInputValidation(dataItem:any) {
     const bookNameRegex = /^[A-z 0-9]{2,20}$/;
@@ -195,11 +197,11 @@ export default function AddBookModal({ open, handleClose }:any) {
     }
     
   }
-  const isString = (value: any): value is string => typeof value === 'string';
+
+
   return (
     <Modal
       open={open}
-      //onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -217,120 +219,121 @@ export default function AddBookModal({ open, handleClose }:any) {
 
         {/* form area */}
         <div style={{top:'10%',color:'red'}}>
-          <TextField
-            style={{width:'100%'}}
-            error={bookNameError !== ''}
-            className="txtField bookNameField"
-            id="bookName"
-            label="Book Name"
-            type="Text"
-            value={bookName}
-            variant="filled"
-            helperText={bookNameError}
-            size="small"    
-            onChange={(e) => {
-              checkValidation('bookName', e.target.value);
-            }}
-          />
-          <TextField
-            style={{width:'100%'}}
-            error={bookAuthorError !== ''}
-            className="txtField bookAuthorField"
-            id="bookAuthor"
-            label="Book Author"
-            type="Text"
-            value={bookAuthor}
-            variant="filled"
-            helperText={bookAuthorError}
-            size="small"
-            onChange={(e) => {
-              checkValidation('bookAuthor', e.target.value);
-            }}
-          />
-          <TextField
-            style={{width:'100%'}}
-            error={bookQtyError !== ''}
-            className="txtField bookQtyField"
-            id="bookQty"
-            label="Book Qty"
-            type="Text"
-            variant="filled"
-            value={bookQty}
-            autoComplete="current-password"
-            helperText={bookQtyError}
-            size="small"
-            onChange={(e) => {
-              checkValidation('bookQty', e.target.value);
-            }}
-          />
-          <TextField
-            style={{width:'100%'}}
-            error={bookPriceError !== ''}
-            className="txtField bookPriceField"
-            id="bookPrice"
-            label="Book Price"
-            type="Text"
-            value={bookPrice}
-            variant="filled"
-            helperText={bookPriceError}
-            size="small"
-            onChange={(e) => {
-              checkValidation('bookPrice', e.target.value);
-            }}
-          />
-          <TextField
-            style={{width:'100%'}}
-            error={bookTypeError !== ''}
-            className="txtField bookTypeField"
-            id="bookType"
-            label="Book Type"
-            type="Text"
-            variant="filled"
-            value={bookType}
-            helperText={bookTypeError}
-            size="small"
-            onChange={(e) => {
-              checkValidation('bookType', e.target.value);
-            }}
-          />
+          <form onSubmit={saveBookFunction} encType='multipart/form-data'>
+            <TextField
+              style={{width:'100%'}}
+              error={bookNameError !== ''}
+              className="txtField bookNameField form-control"
+              id="bookName"
+              label="Book Name"
+              type="Text"
+              value={bookName}
+              variant="filled"
+              helperText={bookNameError}
+              size="small"    
+              onChange={(e) => {
+                checkValidation('bookName', e.target.value);
+              }}
+            />
+            <TextField
+              style={{width:'100%'}}
+              error={bookAuthorError !== ''}
+              className="txtField bookAuthorField form-control"
+              id="bookAuthor"
+              label="Book Author"
+              type="Text"
+              value={bookAuthor}
+              variant="filled"
+              helperText={bookAuthorError}
+              size="small"
+              onChange={(e) => {
+                checkValidation('bookAuthor', e.target.value);
+              }}
+            />
+            <TextField
+              style={{width:'100%'}}
+              error={bookQtyError !== ''}
+              className="txtField bookQtyField form-control"
+              id="bookQty"
+              label="Book Qty"
+              type="Text"
+              variant="filled"
+              value={bookQty}
+              autoComplete="current-password"
+              helperText={bookQtyError}
+              size="small"
+              onChange={(e) => {
+                checkValidation('bookQty', e.target.value);
+              }}
+            />
+            <TextField
+              style={{width:'100%'}}
+              error={bookPriceError !== ''}
+              className="txtField bookPriceField form-control"
+              id="bookPrice"
+              label="Book Price"
+              type="Text"
+              value={bookPrice}
+              variant="filled"
+              helperText={bookPriceError}
+              size="small"
+              onChange={(e) => {
+                checkValidation('bookPrice', e.target.value);
+              }}
+            />
+            <TextField
+              style={{width:'100%'}}
+              error={bookTypeError !== ''}
+              className="txtField bookTypeField form-control"
+              id="bookType"
+              label="Book Type"
+              type="Text"
+              variant="filled"
+              value={bookType}
+              helperText={bookTypeError}
+              size="small"
+              onChange={(e) => {
+                checkValidation('bookType', e.target.value);
+              }}
+            />
 
-          <input
-            className="uploadField"
-            type="file"
-            onChange={handleFileSelect}
-            accept="image/*"
-            style={{backgroundColor:'#f0f0ee',color:'black',width:'100%'}}
-          />
-          {selectedImage && (
-            <div
-              className="previewContainer"
-              style={{ display: 'flex', flexDirection: 'row',marginTop:'5%' }}
-            >
-              {isString(selectedImage) ? (
-                <img
-                  src={selectedImage}
-                  alt="Preview"
-                  style={{ width: '20%', height: '20%' }}
-                />
-              ) : (
-                <span>No Image Selected</span>
-              )}
-              <button  style={{backgroundColor:'transparent',border:'none'}} 
-                className="closeButton" onClick={handleImageClose}>
+            <div className='form-group'>
+              <input
+                className="uploadField form-control-file"
+                name="book_image"
+                type="file"
+                onChange={handleFileSelect}
+                style={{backgroundColor:'#f0f0ee',color:'black',width:'100%'}}
+              />
+              {selectedImagePreview && (
+                <div
+                  className="previewContainer"
+                  style={{ display: 'flex', flexDirection: 'row',marginTop:'5%' }}
+                >
+             
+                  <img
+                    src={selectedImagePreview}
+                    alt="Preview"
+                    style={{ width: '20%', height: '20%' }}
+                  />
+              
+                  <button  style={{backgroundColor:'transparent',border:'none'}} 
+                    className="closeButton" onClick={handleImageClose}>
               x
-              </button>
+                  </button>
+
+                </div>
+              )}
             </div>
-          )}
-          {/* {bookImage.preview && <img src={bookImage.preview} width='100' height='100' />} */}
 
-
-          <Button
-            className="btn saveInBtn"
-            sx={{backgroundColor:'#7bed9f',width:'100%',color:'black',marginTop:'5%',border:'2px solid #7bed9f'}}
-            onClick={saveBookFunction}
-          >
+            <Button
+              className="btn saveInBtn"
+              sx={{backgroundColor:'#7bed9f',width:'100%',color:'black',marginTop:'5%',border:'2px solid #7bed9f'}}
+              type="submit"
+            >
                 SAVE
-          </Button>
+            </Button>
+          </form>
         </div>
       </Box>
     </Modal>

@@ -12,10 +12,12 @@ import { loginUserAction } from './slices/SignInSlice';
 const SignInPage = () => {
 
   //states and instance
+
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setpasswordError] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  
   const user = useSelector((state: any) => state.signIn.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,6 +60,7 @@ const SignInPage = () => {
   const openSignInPage = () => {
     navigate('/register');
   };
+  
   function checkValidation(field: string, value: string) {
     const email = /^[A-z2-9]+@[A-z2-9]+\.[A-z2-9]+$/;
     const password = /^[A-z,0-9 _]{4,10}$/;
@@ -92,7 +95,7 @@ const SignInPage = () => {
           <Grid xs={16} item={true}>
             <div className="mainPage">
               <div className="fieldsArea">
-                <h2 className="labletxt">Log in</h2>
+                <h2 className="labletxt">Sign in to continue!</h2>
                 {/* sign in fields */}
                 <TextField
                   error={emailError !== ''}

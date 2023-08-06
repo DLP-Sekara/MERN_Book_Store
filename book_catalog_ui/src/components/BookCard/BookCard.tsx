@@ -1,30 +1,21 @@
 
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import bookImage from '../../assets/images/book1.jpg';
 import IconButton from '@mui/material/IconButton';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { MDBMask, MDBView, MDBContainer, MDBRow, MDBCol } from 'mdbreact';
-import { deleteBookService } from '../../services/BookServices';
-import { toast } from 'react-toastify';
 import ConfirmDialog from '../DeleteDialog/ConfirmDialog';
 import UpdateBookModal from '../UpdateBookModal/UpdateBookModal';
 import { useNavigate } from 'react-router-dom';
 
 
 export default function BookCard(props:any) {
+  const imageFileName = props.data.book_image;
+  const imageUrl = `/uploads/${imageFileName}`;
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
@@ -47,6 +38,7 @@ export default function BookCard(props:any) {
   const user=localStorage.getItem('userDetails');
   const [userPermision, setUserPermision] = React.useState(false);
   React.useEffect(()=>{
+    
     if (user) {
       const userDetails = JSON.parse(user);
       const status=userDetails.userRoll;
@@ -54,18 +46,19 @@ export default function BookCard(props:any) {
     }
   },[]);
   
- 
   return (
+
+    
     <><Card sx={{ maxWidth: 250 }}>
 
       <CardMedia
         onClick={()=>{navigate('/payment');localStorage.setItem('selectedBook', props.data.bid);}}
         sx={{ height: 250, cursor: 'pointer' }}
-        image={bookImage}
+        image={imageUrl}
         title="book img"
       />
       <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
+        <Typography gutterBottom variant="h5" component="div">
           {props.data.book_name}
         </Typography>
         <Typography variant="body2" color="text.secondary">

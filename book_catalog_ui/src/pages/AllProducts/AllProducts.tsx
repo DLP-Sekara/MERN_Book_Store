@@ -52,6 +52,7 @@ const AllProducts = () => {
   const fetchData = async () => {
     try{
       const response = await getAllBooksService();
+      console.log(response.data);
       dispatch(saveBooksAction(response.data));
       dispatch(setUpdates(false));
       console.log('check code...');
@@ -85,7 +86,7 @@ const AllProducts = () => {
               <AddBookModal open={open} handleClose={handleClose}/>
             </div>
             <div className='content'>
-              {
+              { 
                 books.map((book:any)=>(
                   <BookCard
                     key={book.bid}

@@ -11,6 +11,9 @@
     justify-content: center;
     align-items: center;
   }
+  .labletxt{
+    color: #4A4747;
+  }
   .fieldsArea {
     width: 28rem;
     height: 37rem;

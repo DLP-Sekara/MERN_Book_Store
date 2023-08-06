@@ -29,7 +29,9 @@
     border-radius: 10px;
     margin-bottom: 1rem !important
   }
-  
+  .labletxt{
+    color: #4A4747;
+  }
   .btn {
     width: 80%;
     border-radius: 10px;
