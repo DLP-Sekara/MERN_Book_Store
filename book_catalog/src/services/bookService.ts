@@ -10,46 +10,34 @@ export const getAllBookService=async():Promise<object | string>=>{
   }
 };
 
-export const saveBookService=async(data:BookModel):Promise<object | string>=>{
+export const saveBookService=async(data,bookImage):Promise<object | string>=>{
+  console.log('calling service');
   try{
-    const dataObj=new Book();
-    
-    //auto increment cid
+    console.log(data,bookImage);
     const highestBid = await Book.findOne().sort('-bid').select('bid').lean();
     const newBid = highestBid ? highestBid.bid + 1 : 1;
 
-    dataObj.bid=newBid;
-    dataObj.book_name=data.bookName;
-    dataObj.book_author=data.bookAuthor;
-    dataObj.book_qty=data.bookQty;
-    dataObj.book_price=data.bookPrice;
-    dataObj.book_type=data.bookType;
-    dataObj.book_image='img one';
+    const book = new Book({
+      bid: newBid,
+      book_name: data.book_name,
+      book_author: data.book_author,
+      book_qty: data.book_qty,
+      book_price: data.book_price,
+      book_type: data.book_type,
+      book_image: bookImage,
+    });
 
-    const saveResponse=await dataObj.save();
+    const saveResponse = await book.save();
     return {message:'Book added successfully !',saveResponse};
   }catch(error){
+    console.log(error);
     return ('error :'+error);
   }
 };
 
 export const updateBookService=async(data:BookModel):Promise<object | string>=>{
   try{
-    // const dataObj:BookModel={
-    //   bid = data.bid,
-    //   book_name = data.bookName,
-    //   book_author = data.bookAuthor,
-    //   book_qty = data.bookQty,
-    //   book_price = data.bookPrice,
-    //   book_type = data.bookType,
-    //   book_image = 'img one',
-    //   _id: new ObjectId,
-    //   bookName: '',
-    //   bookAuthor: '',
-    //   bookQty: 0,
-    //   bookPrice: 0,
-    //   bookType: ''
-    // };
+   
     console.log(data);
     const { _id, ...updateData } = data;
     const updateResponse=await Book.findOneAndUpdate({_id},updateData);

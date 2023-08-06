@@ -122,7 +122,7 @@ const SignUpPage = () => {
           <Grid xs={16} item={true}>
             <div className="mainPage">
               <div className="fieldsArea">
-                <h2 className="labletxt">Register</h2>
+                <h2 className="labletxt">Sign up to continue!</h2>
 
                 {/* sign up fields */}
                 <TextField

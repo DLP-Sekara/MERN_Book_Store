@@ -17,10 +17,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom';
-import { logOutUserAction } from '../../pages/SignInPage/slices/SignInSlice';
-import { useDispatch } from 'react-redux';
-
-
+import { logOutUserAction, selectUser } from '../../pages/SignInPage/slices/SignInSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import User from '../../assets/images/user.png';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 //meta for search
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -74,6 +75,8 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
+  const [name,setName]=React.useState('');
+  
   const handleOpenNavMenu = (event:any) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -102,6 +105,12 @@ function ResponsiveAppBar() {
     }
   };
 
+  React.useEffect(()=>{
+    const userDataCookie = cookies.get('userData');
+    setName(
+      userDataCookie.name,
+    );
+  },[]);
   return (
     <AppBar position="static">
       <Container maxWidth="xl" style={{backgroundColor:'#57606f'}}>
@@ -210,7 +219,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="book_catalog_ui\src\assets\images\user.png" />
+                <Avatar alt="Remy Sharp" src={User} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -236,7 +245,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-
+          <Typography sx={{marginLeft:'1%'}}>{name}</Typography>
 
         </Toolbar>
       </Container>

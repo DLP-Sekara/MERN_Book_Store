@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { deleteBookService, fetchBookService, getAllBookService, saveBookService, searchBookService, updateBookService } from '../services/bookService';
 
+
 export const getAllBook=async(req:Request,res:Response):Promise<any>=>{
   try{
     const book=await getAllBookService();
@@ -13,8 +14,11 @@ export const getAllBook=async(req:Request,res:Response):Promise<any>=>{
 
 export const saveBook=async(req:Request,res:Response):Promise<any>=>{
   try{
-    const book=await saveBookService(req.body);
+
+    const bookImage = req.file.originalname;
+    const book=await saveBookService(req.body,bookImage);
     res.send(book);
+  
   }catch(error){
     res.status(400);
   }
@@ -22,6 +26,7 @@ export const saveBook=async(req:Request,res:Response):Promise<any>=>{
 
 export const updateBook=async(req:Request,res:Response):Promise<any>=>{
   try{
+    console.log('contro -',req.body.book);
     const book=await updateBookService(req.body);
     res.send(book);
   }catch(error){

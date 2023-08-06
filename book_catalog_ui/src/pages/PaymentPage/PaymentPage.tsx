@@ -66,7 +66,8 @@ const PaymentPage = () => {
   function placeOrderAction() {
     throw new Error('Function not implemented.');
   }
-
+  const imageFileName = book.book_image;
+  const imageUrl = `/uploads/${imageFileName}`;
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={0}>
@@ -87,12 +88,12 @@ const PaymentPage = () => {
             <div className='content'>
               <img
                 className="zoom-image"
-                src={selectedImage}
+                src={imageUrl}
                 alt="Preview"
-                style={{ width: '1000' ,height: '1449' }}
+                style={{ width: '120%' ,height: '100%',margin:'10%' }}
               />
 
-              <Box sx={{margin:'10%', width: '200%', maxWidth: 1000 }}>
+              <Box sx={{marginLeft:'50%', width: '200%', maxWidth: 1000,height:100 }}>
                 <Typography variant="h3" gutterBottom  sx={{ textAlign: 'left' }}>
                   {book.book_name}
                 </Typography>
@@ -104,9 +105,7 @@ const PaymentPage = () => {
         blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
         neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
         quasi quidem quibusdam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-        quasi quidem quibusdam.
+        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur.
                 </Typography>
                 <br />
                 <Typography variant="body2" fontSize={16} gutterBottom sx={{ textAlign: 'left' }}>
@@ -146,17 +145,23 @@ const PaymentPage = () => {
                 <br />
                 <Typography  display="block" gutterBottom sx={{ textAlign: 'left' ,color:'red'}}>
                   <span style={{ marginRight: 8 ,color:'black'}}>Total</span> : LKR {book.book_price*quantity}.00 
-          
+                  <br/>
+                  <br/>
+                  
+                  <Tooltip title="Add to cart">
+                    
+                    <IconButton>
+                      <Typography>Add to cart_</Typography>
+                      <ShoppingCartIcon />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
+                
                 <br />
                 <div style={{display:'flex',flexDirection:'row'}}>
                   <Button sx={{width:'50%',backgroundColor:'#20bf6b',color:'black',border:'1px solid #20bf6b',left:0,display:'flex'}} onClick={handleOpen}>Buy</Button>
                   <PlaceOrderModal open={open} handleClose={handleClose} data={book} qty={quantity}/>
-                  <Tooltip title="Add to cart">
-                    <IconButton>
-                      <ShoppingCartIcon />
-                    </IconButton>
-                  </Tooltip>
+                 
                 </div>
                 <br />
                 <span style={{ textAlign: 'left',display:'flex' }}><LocalShippingOutlinedIcon/> Estimated deliver 5-7 days</span>
