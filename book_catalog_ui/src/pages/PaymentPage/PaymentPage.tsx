@@ -19,6 +19,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PlaceOrderModal from '../../components/PlaceOrderModal/PlaceOrderModal';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Footer from '../../components/Footer/Footer';
 
 const PaymentPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -80,20 +81,20 @@ const PaymentPage = () => {
         {/* body */}
         <Grid container item xs={12}>
 
-          <Grid item xs={2}>
-            <div className='sidebar'>side bar</div>
-          </Grid>
+          {/* <Grid item xs={2}>
+            <div className='sidebar'></div>
+          </Grid> */}
 
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <div className='content'>
               <img
                 className="zoom-image"
                 src={imageUrl}
                 alt="Preview"
-                style={{ width: '120%' ,height: '100%',margin:'10%' }}
+                style={{ width: '80%' ,height: '80%',margin:'10%' }}
               />
 
-              <Box sx={{marginLeft:'50%', width: '200%', maxWidth: 1000,height:100 }}>
+              <Box sx={{width: '200%', maxWidth: 1000,height:100 }}>
                 <Typography variant="h3" gutterBottom  sx={{ textAlign: 'left' }}>
                   {book.book_name}
                 </Typography>
@@ -172,8 +173,9 @@ const PaymentPage = () => {
         </Grid>
 
         {/* footer */}
-        <Grid item xs={12}>
-          <div className='footer'>footer</div>
+        <Grid item xs={12} height={'85vh'} sx={{backgroundColor:'#ff5013',color:'white'}} >
+          <Footer/>
+          <Typography ><small>All Right Reserved © 2023 READI</small></Typography>
         </Grid>
 
       </Grid>

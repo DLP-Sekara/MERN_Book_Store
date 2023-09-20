@@ -13,6 +13,9 @@ import { getAllBooksService } from '../../services/BookServices';
 import { useDispatch ,useSelector} from 'react-redux';
 import { saveBooksAction, setUpdates } from './AllProductsSlice';
 import { useNavigate } from 'react-router-dom';
+import SideBar from '../../components/SideBar/SideBar';
+import { Typography } from '@mui/material';
+import Footer from '../../components/Footer/Footer';
 
 
 const AllProducts = () => {
@@ -75,10 +78,14 @@ const AllProducts = () => {
         <Grid container item xs={12}>
 
           <Grid item xs={2}>
-            <div className='sidebar'>side bar</div>
+            <div className='sidebar'>
+              <Typography sx={{textAlign:'start',margin:'10%'}}>Filter :</Typography>
+              <SideBar/></div>
           </Grid>
 
           <Grid item xs={10}>
+            <Box sx={{textAlign:'start',margin:'2.2%',color:'red'}}><Typography variant='h5' fontFamily={'initial'} fontWeight={'bold'} >All Books</Typography></Box>
+
             <div className='btnArea1' style={{display:userPermision?'':'none'}}>
               <Button onClick={handleOpen}variant="outlined" startIcon={<AddIcon />}>
                Add Book
@@ -100,8 +107,9 @@ const AllProducts = () => {
         </Grid>
 
         {/* footer */}
-        <Grid item xs={12}>
-          <div className='footer'>footer</div>
+        <Grid item xs={12} height={'85vh'} sx={{backgroundColor:'#ff5013',color:'white'}} >
+          <Footer/>
+          <Typography ><small>All Right Reserved © 2023 READI</small></Typography>
         </Grid>
 
       </Grid>

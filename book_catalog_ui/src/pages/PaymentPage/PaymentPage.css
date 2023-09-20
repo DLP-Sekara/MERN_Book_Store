@@ -1,16 +1,13 @@
 .sidebar{
     min-height: 100vh;
     max-height: auto;
-    background-color: rgb(145, 145, 145);
+    background-color:transparent;
 }
 .content{
     min-height: auto;
      background-color: rgb(255, 255, 255);
 }
-.footer{
-    min-height: 50vh;
-     background-color: red;
-}
+
 .zoom-image {
   transition: transform 0.3s ease;
 }

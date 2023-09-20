@@ -3,16 +3,13 @@
     max-height: auto;
     background-color: blue;
 }
-.content{
-    min-height: 10vh;
-     background-color: green;
+.anime2{
+    min-height: 100vh;
+    max-height: auto;
 }
-.footer{
-    min-height: 50vh;
-     background-color: red;
-}
+
 .books{
-    margin: 10% 5% 10% 5%;
+    margin: 5% 2% 10% 0%;
     padding-left: 5%;
     min-height: auto;
      background-color:#ffffff;
