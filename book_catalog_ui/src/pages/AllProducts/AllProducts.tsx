@@ -99,7 +99,7 @@ const AllProducts = () => {
                     key={book.bid}
                     data={book}
                   />
-                ))
+                )) 
               }
             </div>
           </Grid>

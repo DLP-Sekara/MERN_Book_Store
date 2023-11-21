@@ -180,6 +180,7 @@ const Dashboard = () => {
           {/* slider view */}
           <Grid xs={12} height={'100vh'}>
             {/* <Slider/> */}
+            this place will be updated from a slider.
           </Grid>
         </Grid>
 
